@@ -1,0 +1,4128 @@
+{
+  "x-generator": "NSwag v13.10.8.0 (NJsonSchema v10.3.11.0 (Newtonsoft.Json v12.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MediMapp Broker API",
+    "description": "The MediMapp Broker API aggregates, adapts and exposes data of one or more electronic healthcare record systems in a standardised format.",
+    "contact": {
+      "name": "Soulve Innovations",
+      "url": "https://soulve.nu",
+      "email": "it@soulve.nu"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:9257"
+    }
+  ],
+  "paths": {
+    "/v1/patients/{patientId}/allergies": {
+      "get": {
+        "tags": [
+          "Allergies"
+        ],
+        "summary": "Get all allergies for the given patient.",
+        "operationId": "Allergies",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return allergies.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the allergies of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Allergy"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for allergies is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/answers": {
+      "post": {
+        "tags": [
+          "Answers"
+        ],
+        "summary": "Get Answers for the given patient.",
+        "operationId": "Answers",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return answers.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "x-name": "requestParams",
+          "description": "The request parameters from the request body.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswersRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "Collection of answers for the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AnswerGroup"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for answers is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/appointments": {
+      "get": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Get all appointments for the given patient.",
+        "operationId": "AppointmentsAll",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return appointments.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the appointments of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Appointment"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for appointments is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patient-identifiers/appointments": {
+      "post": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Get all appointments for the given patient identifiers.",
+        "operationId": "Appointments",
+        "parameters": [
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "x-name": "identifiers",
+          "description": "List of patient identifiers for which to return appointments.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PatientIdentifier"
+                }
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "All the appointments of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Appointment"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for appointments is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/articles": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Get all articles.",
+        "operationId": "Articles",
+        "parameters": [
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the articles.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Article"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for articles is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/authentication": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Authenticates a patient with the provided credentials.",
+        "operationId": "Authentication",
+        "requestBody": {
+          "x-name": "request",
+          "description": "The object containing the details for authentication.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticationRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationSuccessfulResult"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for authentication is configured."
+          },
+          "401": {
+            "description": "Authentication was not successful, either due to wrong credentials, or due to requiring a one-time password challenge.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationUnsuccessfulResult"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/reset-password": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Resets the password of the given user.",
+        "operationId": "ResetPassword",
+        "requestBody": {
+          "x-name": "request",
+          "description": "The object containing user and other details to reset the password.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "The request was executed, or no connector for authentication is configured."
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/authorizations": {
+      "get": {
+        "tags": [
+          "Authorizations"
+        ],
+        "summary": "Get details about the authorizations for given patient.",
+        "operationId": "Authorizations",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient to return authorizations for.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Details about the authorizations for given patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Authorizations"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for authorizations configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorizations for the given patientId not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The number of authorizations information returned by the internal code is greater than one, which is unexpected. This can also be returned in other unexpected situations."
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/care-providers": {
+      "get": {
+        "tags": [
+          "CareProviders"
+        ],
+        "summary": "Get all careproviders for the given patient.",
+        "operationId": "CareProviders",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return careproviders.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the careproviders of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CareProvider"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for patients configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The number of patients information returned by the internal code is greater than one, which is unexpected. This can also be returned in other unexpected situations."
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/chemotherapies": {
+      "get": {
+        "tags": [
+          "ChemoTherapies"
+        ],
+        "summary": "Get all chemotherapies for the given patient.",
+        "operationId": "ChemoTherapies",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return chemotherapies.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the chemotherapies of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChemoTherapy"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for chemotherapies is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/EConsults": {
+      "get": {
+        "tags": [
+          "EConsults"
+        ],
+        "operationId": "EConsults",
+        "parameters": [
+          {
+            "name": "TypeCode",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EConsultTypeCodes"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "From",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "To",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EConsult"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Provides an indication about the health of the API.",
+        "operationId": "Health",
+        "responses": {
+          "200": {
+            "description": "API is healthy.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "API is unhealthy or in degraded state."
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/intakes": {
+      "get": {
+        "tags": [
+          "Intakes"
+        ],
+        "operationId": "Intakes",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Intake"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/lab-results": {
+      "post": {
+        "tags": [
+          "LabResults"
+        ],
+        "summary": "Get all LabRequests for the given patient.",
+        "operationId": "Lab-Results",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return lab requests.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "x-name": "templates",
+          "description": "The collection of the Page Templates.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PageTemplate"
+                }
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "All the lab requests of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LabRequest"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for lab requests is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/letters": {
+      "get": {
+        "tags": [
+          "Letters"
+        ],
+        "summary": "Get all letters for the given patient.",
+        "operationId": "Letters",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return letters.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the letters of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Letter"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for letters is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/medications": {
+      "get": {
+        "tags": [
+          "Medications"
+        ],
+        "summary": "Get all medications for the given patient.",
+        "operationId": "Medications",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return medications.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the medications of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Medication"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for medications is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patient-identifiers/{bsn}": {
+      "get": {
+        "tags": [
+          "PatientIdentifiers"
+        ],
+        "summary": "Get patient identifiers by BSN from sourceSystems connectors.",
+        "operationId": "PatientIdentifiersAll",
+        "parameters": [
+          {
+            "name": "bsn",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier for each connector.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "sourceSystems",
+            "in": "query",
+            "style": "form",
+            "explode": true,
+            "required": true,
+            "description": "Systems where need try to get patient identifier.",
+            "schema": {
+              "type": "array",
+              "nullable": false,
+              "items": {
+                "type": "string"
+              }
+            },
+            "x-position": 2
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Patient identifiers.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PatientIdentifier"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for patients configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Patient with the given bsn not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The number of patients information returned by the internal code is greater than one, which is unexpected. This can also be returned in other unexpected situations."
+          }
+        }
+      }
+    },
+    "/v1/patient-identifiers/with-changed-appointments": {
+      "get": {
+        "tags": [
+          "PatientIdentifiers"
+        ],
+        "operationId": "PatientIdentifiers",
+        "parameters": [
+          {
+            "name": "ChangedAfter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "From",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "To",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}": {
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Get details about the given patient.",
+        "operationId": "Patients",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient to return details for.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Details about the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Patient"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for patients configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Patient with the given patientId not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The number of patients information returned by the internal code is greater than one, which is unexpected. This can also be returned in other unexpected situations."
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientBsn}/by-bsn": {
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Get internal number of the given patient.",
+        "operationId": "Patient-By-Bsn",
+        "parameters": [
+          {
+            "name": "patientBsn",
+            "in": "path",
+            "required": true,
+            "description": "The BSN identifier of the patient to return number for the patient.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Details about the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Patient"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for patients configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Patient with the given patient Bsn not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The number of patients information returned by the internal code is greater than one, which is unexpected. This can also be returned in other unexpected situations."
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/tasks": {
+      "get": {
+        "tags": [
+          "PatientTasks"
+        ],
+        "summary": "Get all patient tasks for the given patient.",
+        "operationId": "PatientTasks",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return patient tasks.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the tasks relevant to the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PatientTask"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for questionnaire tasks is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/tasks/{from}/{to}": {
+      "get": {
+        "tags": [
+          "PatientTasks"
+        ],
+        "summary": "Get all patient tasks in a date range.",
+        "operationId": "PatientTasks-AvailableBetween",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "path",
+            "required": true,
+            "description": "The from-date of the date range for which to return patient tasks.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "to",
+            "in": "path",
+            "required": true,
+            "description": "The to-date of the date range for which to return patient tasks.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the patient tasks of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PatientTask"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for patient tasks is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/policy-items": {
+      "get": {
+        "tags": [
+          "PolicyItems"
+        ],
+        "summary": "Get all policy items for the given patient.",
+        "operationId": "PolicyItems",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return  policy items .",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the policy items of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PolicyItem"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for policy items is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/problems": {
+      "get": {
+        "tags": [
+          "Problems"
+        ],
+        "summary": "Get all problems for the given patient.",
+        "operationId": "Problems",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return problems.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the problems of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Problem"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for problems is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/questionnaire-definitions/{questionnaireId}": {
+      "get": {
+        "tags": [
+          "QuestionnaireItems"
+        ],
+        "summary": "Get definition for the given questionnaire.",
+        "operationId": "Questionnaire-Definition",
+        "parameters": [
+          {
+            "name": "questionnaireId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the questionnaire for which to return questionnaire definition.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The questionnaire definition of the questionnaire.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionnaireItem"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for questionnaire definition is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/questionnaires": {
+      "get": {
+        "tags": [
+          "Questionnaires"
+        ],
+        "summary": "Get all questionnaires for the given patient.",
+        "operationId": "Questionnaires",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the questionnaires of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Questionnaire"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for questionnaires is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/questionnaires/daterange/{externalId}/{from}/{to}": {
+      "get": {
+        "tags": [
+          "Questionnaires"
+        ],
+        "summary": "Get all questionnaires for the given patient within specified date range.",
+        "operationId": "Questionnaires-DateRange",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "externalId",
+            "in": "path",
+            "required": true,
+            "description": "The external identifier for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 2
+          },
+          {
+            "name": "from",
+            "in": "path",
+            "required": true,
+            "description": "The from-date of the date range for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "to",
+            "in": "path",
+            "required": true,
+            "description": "The to-date of the date range for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 4
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the questionnaires of the patient within the specified date range.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Questionnaire"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for questionnaires is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/questionnaires/entry/{externalId}/{date}": {
+      "get": {
+        "tags": [
+          "Questionnaires"
+        ],
+        "summary": "Get all questionnaires for the given patient within specified entry.",
+        "operationId": "Questionnaires-Entry",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "externalId",
+            "in": "path",
+            "required": true,
+            "description": "The external identifier for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 2
+          },
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "description": "The date of the given entry for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the questionnaires of the patient for the entry.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Questionnaire"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for questionnaires is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/questionnaires/filled-in-daterange/{externalId}/{from}/{to}": {
+      "get": {
+        "tags": [
+          "Questionnaires"
+        ],
+        "summary": "Get all filled in questionnaires for the given patient within specified date range.",
+        "operationId": "Questionnaires-FilledInDateRange",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "externalId",
+            "in": "path",
+            "required": true,
+            "description": "The external identifier for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 2
+          },
+          {
+            "name": "from",
+            "in": "path",
+            "required": true,
+            "description": "The from-date of the date range for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "to",
+            "in": "path",
+            "required": true,
+            "description": "The to-date of the date range for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 4
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the filled in questionnaires of the patient within the specified date range.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Questionnaire"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for questionnaires is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/questionnaires/last/{lastTaskId}": {
+      "get": {
+        "tags": [
+          "Questionnaires"
+        ],
+        "summary": "Get last questionnaires for the given patient with specified last task.",
+        "operationId": "Questionnaires-Last",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "lastTaskId",
+            "in": "path",
+            "required": true,
+            "description": "The last task identifier for which to return questionnaires.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 2
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The last questionnaires of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Questionnaire"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for questionnaires is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/referrals": {
+      "get": {
+        "tags": [
+          "Referrals"
+        ],
+        "summary": "Get all referrals for the given patient.",
+        "operationId": "Referrals",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return referrals.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the referrals of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Referral"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for referrals is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/referrals/{from}/{to}": {
+      "get": {
+        "tags": [
+          "Referrals"
+        ],
+        "summary": "Get all referrals in a date range.",
+        "operationId": "Referrals-Between",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "path",
+            "required": true,
+            "description": "The from-date of the date range for which to return referrals.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "to",
+            "in": "path",
+            "required": true,
+            "description": "The to-date of the date range for which to return referrals.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the referrals of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Referral"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for referrals is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/v1/users/{user}/rights": {
+      "get": {
+        "tags": [
+          "Rights"
+        ],
+        "summary": "Get details about the rights of given user.",
+        "operationId": "Rights",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the user to return right details for.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Details about the rights for user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Right"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for rights configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Rights with the given user not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The number of rights information returned by the internal code is greater than one, which is unexpected. This can also be returned in other unexpected situations."
+          }
+        }
+      }
+    },
+    "/status": {
+      "get": {
+        "tags": [
+          "Status"
+        ],
+        "operationId": "Status_Get",
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/patients/{patientId}/studies": {
+      "get": {
+        "tags": [
+          "Studies"
+        ],
+        "summary": "Get all studies for the given patient.",
+        "operationId": "Studies",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "description": "The identifier of the patient for which to return studies.",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Source",
+            "in": "header",
+            "required": true,
+            "description": "{\"System\", \"Patient\"}. The source the request comes from. An example of a \"System\" source is an automated process to retrieve changed appointments of all patients. An example of a \"Patient\" source is the patient opening their care pathway.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConnectorName",
+            "in": "header",
+            "required": true,
+            "description": "It is provider name which will provide data.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authentication",
+            "in": "header",
+            "description": "The authentication token for authenticating the request with a electronic healthcare record system. This parameter is not to be confused with the Authorization header, which is an internal parameter used to ensure only our own systems can call the application.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the studies of the patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Study"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No connector for studies is configured."
+          },
+          "401": {
+            "description": "The provided token is no longer or was never valid. Re-authentication is required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Allergy": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "extensions": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {}
+          }
+        }
+      },
+      "AnswerGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "department": {
+            "type": "string"
+          },
+          "answers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Answer"
+            }
+          }
+        }
+      },
+      "Answer": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "answerText": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          }
+        }
+      },
+      "AnswersRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "templateId": {
+            "type": "string"
+          },
+          "departmentName": {
+            "type": "string"
+          },
+          "columnNames": {
+            "type": "string"
+          },
+          "consultTypes": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "delay": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "Appointment": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProcessedBy"
+          },
+          {
+            "type": "object",
+            "description": "An Appointment a Patient has.",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "A unique identifier of the Appointment."
+              },
+              "startsAt": {
+                "type": "string",
+                "description": "The point in time at which the Appointment starts.",
+                "format": "date-time",
+                "example": "2020-09-01T08:00:00Z"
+              },
+              "endsAt": {
+                "type": "string",
+                "description": "The point in time at which the Appointment ends.",
+                "format": "date-time",
+                "nullable": true,
+                "example": "2020-09-01T10:00:00Z"
+              },
+              "careProviders": {
+                "type": "array",
+                "description": "The Care Providers the Patient will meet during this Appointment, such as doctors, general practitioners, surgeons, etc.",
+                "items": {
+                  "$ref": "#/components/schemas/CareProvider"
+                }
+              },
+              "locations": {
+                "type": "array",
+                "description": "The Location(s) where the Appointment will take place. We allow for multiple Locations to support situations where \na Patient is first seen by a doctor and then expected to be referred to e.g. the radiology department for an X-Ray.",
+                "items": {
+                  "$ref": "#/components/schemas/Location"
+                }
+              },
+              "matcherProperties": {
+                "type": "array",
+                "description": "To determine where and how to show the Appointment in the Patient's pathway, we return a collection of properties for our\nmatching algorithm.\nOur consultants can then in collaboration with the hospital or treatment centre model the correct pathways based on these properties.\nAn example of a property would be an \"AppointmentTypeId\" which uniquely identifies an Appointment is a yearly repeating consultation with a\nneurologist on epilepsy. It might be that in some hospitals, such an Appointment is identified with a combination of 2 or 3 properties,\nhence the Matcher Properties is a collection.",
+                "items": {
+                  "$ref": "#/components/schemas/MatcherProperty"
+                }
+              },
+              "isDefinitiveDate": {
+                "type": "boolean",
+                "description": "Display SurgeryTime only when this field is set to true."
+              },
+              "timeSet": {
+                "type": "boolean",
+                "description": "???"
+              },
+              "examinations": {
+                "type": "array",
+                "description": "???",
+                "items": {
+                  "$ref": "#/components/schemas/Examination"
+                }
+              },
+              "patientInstructions": {
+                "type": "array",
+                "description": "???",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "relatedProblems": {
+                "type": "array",
+                "description": "???",
+                "items": {
+                  "$ref": "#/components/schemas/ID"
+                }
+              },
+              "description": {
+                "type": "string",
+                "description": "???"
+              }
+            }
+          }
+        ]
+      },
+      "CareProvider": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Person"
+          },
+          {
+            "type": "object",
+            "description": "A Care Provider is a doctor, general practitioner, surgeon, or any other medical staff which actively sees and helps the patient.",
+            "additionalProperties": false,
+            "properties": {
+              "isExecutor": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "isPhysician": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "relationship": {
+                "type": "string",
+                "nullable": true
+              },
+              "specialty": {
+                "type": "string",
+                "nullable": true
+              },
+              "startDate": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "type": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "Person": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "A unique identifier of the Person."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the Person."
+          }
+        }
+      },
+      "Location": {
+        "type": "object",
+        "description": "Represents a Location.",
+        "additionalProperties": false,
+        "properties": {
+          "ids": {
+            "type": "array",
+            "description": "The Location's identifier(s).\nMultiple identifiers are allowed, to support cases where an identifier represents smaller and smaller areas in a hospital, such as:\nhospital building, department, section, and room.\nWithin the MediMapp administrative interface, what the patient actually sees about a Location can be configured. This configuration includes the\ntexts and images.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string",
+            "description": "The Location's name.\nThe name is used by our consultants to understand what the Location's Ids of this Location refer to.\nThis doesn't have to be a patient understandable format. As what is presented to the patient is configured by the consultant."
+          }
+        }
+      },
+      "MatcherProperty": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "Examination": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "???"
+          },
+          "description": {
+            "type": "string",
+            "description": "???"
+          },
+          "groups": {
+            "type": "array",
+            "description": "???",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ID": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "ProcessedBy": {
+        "type": "object",
+        "x-abstract": true,
+        "additionalProperties": false,
+        "properties": {
+          "sourceSystem": {
+            "type": "string",
+            "description": "Connector name which have this appointment."
+          }
+        }
+      },
+      "PatientIdentifier": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProcessedBy"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "patientId": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "Article": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "articles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Article"
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "isGroup": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthenticationSuccessfulResult": {
+        "type": "object",
+        "description": "Contains authentication successful result data.",
+        "additionalProperties": false,
+        "properties": {
+          "userIdentifier": {
+            "type": "string",
+            "description": "The identifier of the user which should be used for every subsequent API request that retrieves user specific information."
+          },
+          "accessToken": {
+            "type": "string",
+            "description": "The access token which needs to be sent on every subsequent API request."
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "The refresh token using which the user's session can be extended."
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "The date and time at which the access and refresh token expire.",
+            "format": "date-time"
+          }
+        }
+      },
+      "AuthenticationUnsuccessfulResult": {
+        "type": "object",
+        "description": "Contains authentication unsuccessful result data.",
+        "additionalProperties": false,
+        "properties": {
+          "validCredentials": {
+            "type": "boolean",
+            "description": "Indicates if the supplied credentials (username/email and password) are valid."
+          },
+          "multiFactorAuthenticationChallengeType": {
+            "description": "When credentials are valid (ValidCredentials == true), but a multi-factor authentication challenge is required, this value\nindicates what type of challenge is done.",
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MultiFactorAuthenticationChallengeType"
+              }
+            ]
+          },
+          "multiFactorAuthenticationToken": {
+            "type": "string",
+            "description": "When credentials are valid (ValidCredentials == true), but a multi-factor authentication challenge is required, this value\nneeds to be sent on the request that includes the one-time password.",
+            "nullable": true
+          }
+        }
+      },
+      "MultiFactorAuthenticationChallengeType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Email",
+          "Sms"
+        ],
+        "enum": [
+          1,
+          2
+        ]
+      },
+      "AuthenticationRequest": {
+        "type": "object",
+        "description": "Contains authentication request data. Different properties are filled depending on the type of request.\nWhen the user logs in with a username or email address, and password, then fill: User and Password.\nWhen the user received a one time password and logs in with it, then fill: MultiFactorAuthenticationToken and OneTimePassword.\nWhen the user needs to extend their session with a refresh token, then fill: RefreshToken.\nThe Additional Properties can be filled for all requests if necessary.",
+        "additionalProperties": false,
+        "properties": {
+          "user": {
+            "type": "string",
+            "description": "The username or email address of the user.",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "description": "The password of the user.",
+            "nullable": true
+          },
+          "multiFactorAuthenticationToken": {
+            "type": "string",
+            "description": "The multi-factor authentication token.",
+            "nullable": true
+          },
+          "oneTimePassword": {
+            "type": "string",
+            "description": "The one time password.",
+            "nullable": true
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "The refresh token to be used for authenticating in order to get a new authentication token.",
+            "nullable": true
+          },
+          "additionalProperties": {
+            "type": "object",
+            "description": "Any additional data necessary to perform the authentication request. E.g. information on the huisstijl (Application)\nthe user is in.",
+            "nullable": true,
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResetPasswordRequest": {
+        "type": "object",
+        "description": "Contains the reset password request data.",
+        "additionalProperties": false,
+        "properties": {
+          "user": {
+            "type": "string",
+            "description": "The username or email address of the user."
+          },
+          "additionalProperties": {
+            "type": "object",
+            "description": "Any additional data necessary to perform the authentication request. E.g. information on the huisstijl (Application)\nthe user is in.",
+            "nullable": true,
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Authorizations": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "permittedMe": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthorizationPerson"
+            }
+          },
+          "permissionsFor": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthorizationPerson"
+            }
+          }
+        }
+      },
+      "AuthorizationPerson": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "birthdate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string"
+          },
+          "patientId": {
+            "type": "string"
+          }
+        }
+      },
+      "ChemoTherapy": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "careProvider": {
+            "$ref": "#/components/schemas/CareProvider"
+          },
+          "code": {
+            "type": "string"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "EConsult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "patientNumber": {
+            "type": "string"
+          },
+          "itemId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "EConsultTypeCodes": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "STD",
+          "MED",
+          "KLI"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "Intake": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "intake_id": {
+            "type": "string"
+          },
+          "hash": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "intake_type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/IntakeType"
+              }
+            ]
+          },
+          "questionnaires": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Questionnaire"
+            }
+          },
+          "status": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "placerOrderNumber": {
+            "type": "string"
+          },
+          "organization": {
+            "type": "string"
+          },
+          "department": {
+            "type": "string"
+          },
+          "appointment": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MedifyAppointment"
+              }
+            ]
+          }
+        }
+      },
+      "IntakeType": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "Questionnaire": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "taskIndex": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "taskDefinitionId": {
+            "type": "string"
+          },
+          "profileId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "patientId": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "uri": {
+            "type": "string"
+          },
+          "executionDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "MedifyAppointment": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "start_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "LabRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "labGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LabGroup"
+            }
+          },
+          "testPerformedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "LabGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "childLabGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LabGroup"
+            }
+          },
+          "header": {
+            "type": "string"
+          },
+          "isHeaderVisible": {
+            "type": "boolean"
+          },
+          "labResults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LabResult"
+            }
+          }
+        }
+      },
+      "LabResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "comment": {
+            "type": "string"
+          },
+          "referenceValue": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string"
+          },
+          "typeId": {
+            "type": "string"
+          },
+          "typeName": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          }
+        }
+      },
+      "PageTemplate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "delay": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "splitStatuses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Letter": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "specialism": {
+            "type": "string"
+          }
+        }
+      },
+      "Medication": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "careProvider": {
+            "$ref": "#/components/schemas/CareProvider"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "gStandardCode": {
+            "type": "string"
+          },
+          "prescibeDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "prescription": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "status": {
+            "type": "string"
+          },
+          "stopReason": {
+            "type": "string"
+          }
+        }
+      },
+      "Patient": {
+        "type": "object",
+        "description": "Represents a Patient.",
+        "additionalProperties": false,
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "The Patient's first name.",
+            "nullable": true,
+            "example": "Joseph"
+          },
+          "middleName": {
+            "type": "string",
+            "description": "The Patient's middle name.",
+            "nullable": true,
+            "example": "Grote"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The Patient's last name.",
+            "example": "Ziani"
+          },
+          "maidenName": {
+            "type": "string",
+            "description": "The Patient's maiden name.",
+            "nullable": true,
+            "example": "Oliveira"
+          },
+          "address": {
+            "description": "The Patient's Address.",
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Address"
+              }
+            ]
+          },
+          "email": {
+            "type": "string",
+            "description": "The Patient's email address.",
+            "nullable": true,
+            "example": "email@sample.nl"
+          },
+          "mobilePhoneNumber": {
+            "description": "The Patient's telephone number.",
+            "example": 310611123456,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TelephoneNumber"
+              }
+            ]
+          },
+          "burgerservicenummer": {
+            "type": "string",
+            "description": "The patient's Burgerservicenummer (BSN).",
+            "nullable": true,
+            "example": 999999990
+          },
+          "number": {
+            "type": "string",
+            "description": "The Patient's internal number which can be retrieved by BSN",
+            "nullable": true,
+            "example": "0012345678"
+          },
+          "isBurgerservicenummerValidated": {
+            "type": "boolean",
+            "description": "Indicates that the Patient's burgerservicenummer is determined to be correct.\nValidation occurs at the hospital by an authorized staff.\nVarious DigiD login related features will not work for patients of whom the burgerservicenummer isn't validated.",
+            "example": true
+          },
+          "sex": {
+            "description": "The Patient's biological Sex.",
+            "example": 0,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Sex"
+              }
+            ]
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "The Patient's birth date.\nExpects a date to be provided without time component.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "1988-12-16T00:00:00"
+          },
+          "deceasedDate": {
+            "type": "string",
+            "description": "The Patient's deceased date.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2020-01-25T13:20:12Z"
+          },
+          "isDeceased": {
+            "type": "boolean",
+            "description": "Indicates that the Patient has passed away.",
+            "example": true
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "description": "Contains the Address of a Patient.",
+        "additionalProperties": false,
+        "properties": {
+          "addressLine": {
+            "type": "string",
+            "description": "Street name, number, direction, P.O. Box, etc.",
+            "example": "Newtonlaan 115"
+          },
+          "city": {
+            "type": "string",
+            "description": "Name of city, town etc.",
+            "example": "Utrecht"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal code for area.",
+            "example": "3584BH"
+          }
+        }
+      },
+      "TelephoneNumber": {
+        "type": "object",
+        "description": "Represents a telephone number in E.164 format.",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "The actual underlying value of the Telephone Number, in E.164 format.",
+            "example": 31611123456
+          }
+        }
+      },
+      "Sex": {
+        "type": "integer",
+        "description": "Sex is the biological sex (i.e., the state of being male, female, or an intersex variation).\nThis is not to be confused with gender, which is the way a person identifies themselves.",
+        "x-enumNames": [
+          "Unknown",
+          "Male",
+          "Female",
+          "Intersex"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "PatientTask": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "patientId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title/description of PatientTask."
+          },
+          "status": {
+            "$ref": "#/components/schemas/PatientTaskStatus"
+          },
+          "redirect": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/RedirectPatientTask"
+              }
+            ]
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "Date and time before which the PatientTask should be completed.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "completedAt": {
+            "type": "string",
+            "description": "Date and time the PatientTask was completed.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "matcherProperties": {
+            "type": "array",
+            "description": "Tt returns a collection of properties which are specific for custom QuestionnaireTask implementation.\nAn example of a property would be an \"ExtraInformation\" property which contains Measurement Path Name.\nIt might be in some hospitals, but in the other hospitals not. The same situation might be with the set of the other properties hence the Matcher Properties is a collection.",
+            "items": {
+              "$ref": "#/components/schemas/MatcherProperty"
+            }
+          },
+          "isOpenedInTheSameWindow": {
+            "type": "boolean",
+            "description": "This flag indicates that the external link for Patient Task should be opened in the same\nbrowser window which is used for Patient Task showing.\nIt is TRUE by default."
+          }
+        }
+      },
+      "PatientTaskStatus": {
+        "type": "string",
+        "description": "Status of PatientTask.",
+        "x-enumNames": [
+          "Open",
+          "Completed",
+          "Expired"
+        ],
+        "enum": [
+          "Open",
+          "Completed",
+          "Expired"
+        ]
+      },
+      "RedirectPatientTask": {
+        "type": "object",
+        "description": "Redirect information to navigate to external patient task.",
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "PolicyItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "problemId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "Problem": {
+        "type": "object",
+        "description": "Represents a Problem which a Patient is (likely) suffering from.\nFor the majority of healthcare providers, these will be based on ICD-10 codes. Though alternative codes are supported.\nThe Problems are used for the first selection of which pathways might apply to the Patient. For example,\nwhen the Patient suffers from an epilepsy related Problem, we can skip the calculation of pathways related to knee Problems.",
+        "additionalProperties": false,
+        "properties": {
+          "ids": {
+            "type": "array",
+            "description": "The identifier(s) of the Problem. For the majority of healthcare providers, these will be based on ICD-10 codes. Though alternative codes are supported.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "The Problem's description, which can be used by the consultant during the pathway modelling phase to understand what\nthe meaning of the Problem's Ids is."
+          },
+          "startedAt": {
+            "type": "string",
+            "description": "The point in time at which the Problem started.\nOftentimes this will be the first moment at which an Appointment was created, but it could also be based on information a general practitioner provided to the hospital.",
+            "format": "date-time",
+            "example": "2020-06-05T11:43:00+02:00"
+          },
+          "endedAt": {
+            "type": "string",
+            "description": "The point in time at which the Problem ended.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2020-08-10T13:22:35+02:00"
+          },
+          "matcherProperties": {
+            "type": "array",
+            "description": "Tt returns a collection of properties which are specific for custom Problem implementation in the hospital.\nAn example of a property would be an \"IsPresentOnAdmission\" property which indicates if Problem exists at the moment of Patient's admission.\nIt might be in some hospitals, but in the other hospitals not. The same situation might be with the set of the other properties hence the Matcher Properties is a collection.",
+            "items": {
+              "$ref": "#/components/schemas/MatcherProperty"
+            }
+          }
+        }
+      },
+      "QuestionnaireItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/QuestionnaireItemType"
+          },
+          "items": {
+            "type": "array",
+            "description": "Questionnaire sub-items.",
+            "items": {
+              "$ref": "#/components/schemas/QuestionnaireItem"
+            }
+          }
+        }
+      },
+      "QuestionnaireItemType": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Question",
+          "List"
+        ],
+        "enum": [
+          "Question",
+          "List"
+        ]
+      },
+      "Referral": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "patientId": {
+            "type": "string"
+          },
+          "plannable": {
+            "type": "boolean"
+          },
+          "question": {
+            "type": "string"
+          },
+          "referralDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "Right": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rightAgendas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RightAgenda"
+            }
+          }
+        }
+      },
+      "RightAgenda": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "agendaId": {
+            "type": "string"
+          },
+          "exclude": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Study": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "basic": {
+        "type": "http",
+        "description": "Basic Authorization header using the Basic scheme.",
+        "name": "Authorization",
+        "in": "header",
+        "scheme": "basic"
+      }
+    }
+  },
+  "security": [
+    {
+      "basic": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "v1"
+    }
+  ]
+}
